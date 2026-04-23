@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael Lohmar – Strategy · Business Development · Company Building</title>
+<style>
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 18px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  background: #f5f5f7;
+  color: #1d1d1f;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ── Variables ── */
+:root {
+  --blue: #0071e3;
+  --blue-hover: #0077ed;
+  --dark: #1d1d1f;
+  --mid: #6e6e73;
+  --light-bg: #f5f5f7;
+  --white: #ffffff;
+  --border: rgba(0,0,0,0.07);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.10);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.14);
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+
+/* ── Nav ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  height: 52px;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(245,245,247,0.85);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand { font-size: 1rem; font-weight: 700; color: var(--dark); letter-spacing: -0.01em; }
+.nav-links { display: flex; gap: 24px; list-style: none; }
+.nav-links a {
+  font-size: 0.88rem;
+  color: var(--mid);
+  transition: color 0.2s;
+  letter-spacing: -0.005em;
+}
+.nav-links a:hover { color: var(--dark); }
+
+/* ── Hero ── */
+#hero {
+  background: var(--white);
+  padding: 90px 24px 80px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.hero-photo-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 36px;
+  cursor: zoom-in;
+}
+.hero-photo {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 8%;
+  display: block;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+  image-rendering: -webkit-optimize-contrast;
+}
+.hero-photo-wrap:hover .hero-photo {
+  transform: scale(1.04);
+  box-shadow: 0 28px 70px rgba(0,0,0,0.18);
+}
+.zoom-hint {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 30px;
+  height: 30px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.hero-photo-wrap:hover .zoom-hint { opacity: 1; }
+#hero h1 {
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+.hero-sub {
+  font-size: 1.25rem;
+  color: var(--mid);
+  font-weight: 400;
+  margin-bottom: 30px;
+  letter-spacing: -0.01em;
+}
+.hero-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px; }
+.hero-pill {
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  color: var(--dark);
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 13px 28px;
+  border-radius: 980px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  letter-spacing: -0.01em;
+}
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-hover); transform: scale(1.02); }
+.btn-ghost {
+  background: transparent;
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+}
+.btn-ghost:hover { background: rgba(0,113,227,0.06); transform: scale(1.02); }
+.hero-location { margin-top: 24px; font-size: 0.95rem; color: var(--mid); }
+
+/* ── Section wrapper ── */
+.section { padding: 88px 24px; }
+.section.alt { background: var(--white); }
+.section-inner { max-width: 980px; margin: 0 auto; }
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.section-heading {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--dark);
+  margin-bottom: 48px;
+}
+
+/* ── Stats ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 56px;
+}
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+.stat-num {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--dark);
+  line-height: 1;
+}
+.stat-unit { color: var(--blue); }
+.stat-label { font-size: 0.88rem; color: var(--mid); margin-top: 8px; }
+
+/* ── Profile text ── */
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.profile-text p { color: var(--mid); font-size: 1.05rem; line-height: 1.75; margin-bottom: 18px; }
+.profile-text p:last-child { margin-bottom: 0; }
+.info-stack { display: flex; flex-direction: column; gap: 12px; }
+.info-card {
+  background: var(--light-bg);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.info-card-label { font-size: 0.73rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mid); }
+.info-card-value { font-size: 0.95rem; font-weight: 500; color: var(--dark); }
+
+/* ── Timeline ── */
+.timeline { display: flex; flex-direction: column; gap: 20px; }
+.tl-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.tl-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.tl-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 4px; flex-wrap: wrap; }
+.tl-company { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.018em; color: var(--dark); }
+.tl-badge {
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--light-bg);
+  color: var(--mid);
+  padding: 5px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.tl-role { font-size: 0.97rem; color: var(--mid); margin-bottom: 14px; }
+.tl-body { font-size: 0.97rem; color: #333; line-height: 1.7; }
+.tl-body ul { padding-left: 16px; }
+.tl-body li { margin-bottom: 5px; }
+.ventures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+.venture {
+  background: var(--light-bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+}
+.venture strong { display: block; color: var(--dark); font-weight: 600; margin-bottom: 2px; }
+.venture span { color: var(--mid); font-size: 0.8rem; }
+
+/* ── Projects ── */
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.proj-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.proj-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.proj-year { font-size: 0.73rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+.proj-title { font-size: 1rem; font-weight: 700; color: var(--dark); letter-spacing: -0.015em; margin-bottom: 10px; line-height: 1.3; }
+.proj-desc { font-size: 0.85rem; color: var(--mid); line-height: 1.6; flex: 1; margin-bottom: 16px; }
+.proj-kpis { display: flex; flex-direction: column; gap: 5px; }
+.kpi {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+.kpi-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+  flex-shrink: 0;
+}
+.kpi-dot.neutral { background: #c7c7cc; }
+
+/* ── Awards ── */
+.awards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.award-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.award-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.award-icon { font-size: 2.4rem; margin-bottom: 14px; }
+.award-title { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; letter-spacing: -0.015em; }
+.award-source { font-size: 0.9rem; color: var(--mid); }
+
+/* ── Skills ── */
+.skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.skill-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+.skill-card h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 16px;
+}
+.tag-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  background: var(--light-bg);
+  color: var(--dark);
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.008em;
+}
+
+/* ── Contact ── */
+#kontakt {
+  background: var(--dark);
+  padding: 100px 24px;
+  text-align: center;
+}
+#kontakt .eyebrow { color: rgba(255,255,255,0.45); }
+#kontakt .section-heading { color: #fff; margin-bottom: 16px; }
+.contact-sub { font-size: 1.1rem; color: rgba(255,255,255,0.55); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+.contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-white { background: #fff; color: var(--dark); }
+.btn-white:hover { background: #f0f0f0; transform: scale(1.02); }
+.btn-outline-white {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.3);
+}
+.btn-outline-white:hover { background: rgba(255,255,255,0.08); transform: scale(1.02); }
+.contact-info { margin-top: 40px; font-size: 0.84rem; color: rgba(255,255,255,0.3); }
+
+/* ── Footer ── */
+footer {
+  background: var(--dark);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+  padding: 20px 24px;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── Lightbox ── */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  animation: fadeIn 0.25s ease;
+}
+.lightbox-overlay.active { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.lightbox-img {
+  max-width: min(480px, 88vw);
+  max-height: 88vh;
+  border-radius: 22px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.5);
+  object-fit: cover;
+  object-position: center 8%;
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes scaleIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.22); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .profile-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr 1fr; }
+  .awards-grid { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .ventures { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+@media (max-width: 500px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .awards-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .hero-photo { width: 170px; height: 170px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Lightbox ── -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+  <img src="Michael-blanco.png" alt="Michael Lohmar" class="lightbox-img" onclick="event.stopPropagation()">
+</div>
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">Michael Lohmar</span>
+    <ul class="nav-links">
+      <li><a href="#profil">Profil</a></li>
+      <li><a href="#stationen">Stationen</a></li>
+      <li><a href="#projekte">Projekte</a></li>
+      <li><a href="#auszeichnungen">Auszeichnungen</a></li>
+      <li><a href="#kompetenzen">Kompetenzen</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-photo-wrap" onclick="openLightbox()" title="Foto vergrößern">
+    <img
+      src="Michael-blanco.png"
+      alt="Michael Lohmar"
+      class="hero-photo"
+      loading="eager"
+      decoding="async"
+    >
+    <div class="zoom-hint">🔍</div>
+  </div>
+  <h1>Michael Lohmar</h1>
+  <p class="hero-sub">Strategy &nbsp;·&nbsp; Business Development &nbsp;·&nbsp; Company Building</p>
+  <div class="hero-pills">
+    <span class="hero-pill">Geschäftsführer</span>
+    <span class="hero-pill">Head of Business Development</span>
+  </div>
+  <div class="hero-actions">
+    <a href="#kontakt" class="btn btn-primary">Kontakt aufnehmen</a>
+    <a href="https://www.linkedin.com/in/michael-lohmar/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+  </div>
+  <p class="hero-location">📍 Köln / Bonn Region &nbsp;·&nbsp; NRW</p>
+</section>
+
+<!-- ── Profil ── -->
+<section class="section alt" id="profil">
+  <div class="section-inner">
+    <div class="section-heading">Stratege &amp; Macher</div>
+    <div class="profile-grid">
+      <div class="profile-text">
+        <p>
+          Ich verbinde acht Jahre Top-Management-Beratung mit dreieinhalb Jahren operativer Verantwortung
+          als Geschäftsführender Gesellschafter – eine Kombination, die ich bei den wenigsten meiner
+          Altersgruppe sehe.
+        </p>
+        <p>
+          Als Company Builder bei der ELFIN Group habe ich gelernt, was klassische Beratung oft auslässt:
+          Strategien nicht nur zu entwerfen, sondern sie mit echtem unternehmerischen Risiko umzusetzen –
+          von der ersten Idee bis zum laufenden Betrieb.
+        </p>
+        <p>
+          Ich suche jetzt eine Führungsrolle an der Schnittstelle von Strategie, Business Development
+          und operativer Führung – in einem Unternehmen, das Wachstum nicht nur plant, sondern
+          ernsthaft verfolgt.
+        </p>
+      </div>
+      <div class="info-stack">
+        <div class="info-card">
+          <span class="info-card-label">Standort &amp; Mobilität</span>
+          <span class="info-card-value">Köln / Bonn Region · Hybrid-Modelle willkommen</span>
+        </div>
+        <div class="info-card">
+          <span class="info-card-label">Zielunternehmen</span>
+          <span class="info-card-value">Scale-ups · PE-Portfolio · Mittelstand · Venture Studios</span>
+        </div>
+        <div class="info-card">
+          <span class="info-card-label">Zielrollen</span>
+          <span class="info-card-value">Head of BD · Chief of Staff · VP Strategy · Company Builder</span>
+        </div>
+        <div class="info-card">
+          <span class="info-card-label">Verfügbarkeit</span>
+          <span class="info-card-value">Offen für Gespräche &amp; Anfragen</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">8<span class="stat-unit"> J.</span></div>
+        <div class="stat-label">Top-Management-Beratung</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">70<span class="stat-unit">+</span></div>
+        <div class="stat-label">Beratungsprojekte</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Ventures aufgebaut &amp; geführt</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3<span class="stat-unit">×</span></div>
+        <div class="stat-label">Consulting-Auszeichnungen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stationen ── -->
+<section class="section" id="stationen">
+  <div class="section-inner">
+    <div class="section-heading">Stationen</div>
+    <div class="timeline">
+
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-company">ELFIN Group &nbsp;—&nbsp; Köln</span>
+          <span class="tl-badge">2022 – heute</span>
+        </div>
+        <div class="tl-role">Geschäftsführender Gesellschafter &amp; Director Business Development</div>
+        <div class="tl-body">
+          <p>Unternehmerische Verantwortung für drei Ventures: Aufbau, operative Führung, Go-to-Market und Vertrieb. Vollständige P&amp;L-Verantwortung als Gesellschafter-GF (je 5% Minderheitsbeteiligung).</p>
+          <div class="ventures">
+            <div class="venture">
+              <strong>CogniCore</strong>
+              <span>KI-Software &amp; Produkte für Beratungshäuser · 6 MA</span>
+            </div>
+            <div class="venture">
+              <strong>ELFIN Digital</strong>
+              <span>Amazon Marketplace-Agentur für KMU (FBA/FBM) · 4 MA</span>
+            </div>
+            <div class="venture">
+              <strong>Nachklang</strong>
+              <span>Digitale Gedenkplattform B2C/B2B · mein-nachklang.de</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-company">wdp / valantic &nbsp;—&nbsp; Düsseldorf</span>
+          <span class="tl-badge">2014 – 2022 &nbsp;·&nbsp; 8 Jahre</span>
+        </div>
+        <div class="tl-role">Manager Strategy &amp; Operations &nbsp;·&nbsp; Top-Management-Beratung</div>
+        <div class="tl-body">
+          <ul>
+            <li>Mehr als 70 Projekte: über 30 Digital-Strategien, 20+ Planungs-/Controlling-Mandate, 15+ Commercial Due Diligences</li>
+            <li>Branchenschwerpunkte: Sozialwirtschaft, Industrie &amp; Maschinenbau, Handel, Verlage, Dienstleistungen</li>
+            <li>2× Best of Consulting Award – WirtschaftsWoche (2020 &amp; 2021)</li>
+            <li>Bester Unternehmensberater – brand eins (mehrfach)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-company">Universität &nbsp;—&nbsp; Wirtschaftswissenschaften</span>
+          <span class="tl-badge">bis 2014</span>
+        </div>
+        <div class="tl-role">Studium Wirtschaftswissenschaften &nbsp;·&nbsp; Nebenberuflich Dozent</div>
+        <div class="tl-body">
+          <p>Nebenberuflich Dozent für Management Consulting, Projektmanagement und Wirtschaftsplanspiel.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Auszeichnungen ── -->
+<section class="section" id="auszeichnungen">
+  <div class="section-inner">
+    <div class="section-heading">Auszeichnungen</div>
+    <div class="awards-grid">
+      <div class="award-card">
+        <div class="award-icon">🏆</div>
+        <div class="award-title">Best of Consulting 2020</div>
+        <div class="award-source">WirtschaftsWoche · Preis- &amp; Angebotsstrategie</div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🏆</div>
+        <div class="award-title">Best of Consulting 2021</div>
+        <div class="award-source">WirtschaftsWoche · Digital-Strategie</div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">⭐</div>
+        <div class="award-title">Bester Unternehmensberater</div>
+        <div class="award-source">brand eins · mehrfach ausgezeichnet</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Kompetenzen ── -->
+<section class="section alt" id="kompetenzen">
+  <div class="section-inner">
+    <div class="section-heading">Kompetenzen</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4>Strategie &amp; Business Development</h4>
+        <div class="tag-wrap">
+          <span class="tag">Corporate Strategy</span>
+          <span class="tag">Business Development</span>
+          <span class="tag">Go-to-Market</span>
+          <span class="tag">Commercial Due Diligence</span>
+          <span class="tag">Markt- &amp; Wettbewerbsanalyse</span>
+          <span class="tag">Preisstrategien</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>Führung &amp; Operations</h4>
+        <div class="tag-wrap">
+          <span class="tag">Geschäftsführung (GmbH)</span>
+          <span class="tag">P&amp;L-Verantwortung</span>
+          <span class="tag">Team Leadership</span>
+          <span class="tag">Change Management</span>
+          <span class="tag">OKR / KPI-Systeme</span>
+          <span class="tag">Prozessoptimierung</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>Ventures &amp; Company Building</h4>
+        <div class="tag-wrap">
+          <span class="tag">Venture Building</span>
+          <span class="tag">Startup-Führung</span>
+          <span class="tag">Produkt-Management</span>
+          <span class="tag">KI / SaaS</span>
+          <span class="tag">E-Commerce</span>
+          <span class="tag">B2B-Vertrieb</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h4>Digitalisierung &amp; Analyse</h4>
+        <div class="tag-wrap">
+          <span class="tag">Digital-Strategien</span>
+          <span class="tag">Digitalisierungsberatung</span>
+          <span class="tag">Zielgruppenanalyse</span>
+          <span class="tag">Finanzmodellierung</span>
+          <span class="tag">Wirtschaftsplanung</span>
+          <span class="tag">Private Investments</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Kontakt ── -->
+<section id="kontakt">
+  <div class="section-inner" style="max-width:980px;margin:0 auto;">
+    <div class="section-heading">Kontakt</div>
+    <p class="contact-sub">
+      Ich freue mich über Anfragen zu passenden Rollen, Kooperationen oder einem ersten unverbindlichen Gespräch.
+    </p>
+    <div class="contact-btns">
+      <a href="mailto:mail@michael-lohmar.de" class="btn btn-white">✉&nbsp; E-Mail schreiben</a>
+      <a href="https://www.linkedin.com/in/michael-lohmar/" target="_blank" class="btn btn-outline-white">LinkedIn-Profil</a>
+    </div>
+    <div class="contact-info">mail@michael-lohmar.de &nbsp;·&nbsp; Köln / Bonn</div>
+  </div>
+</section>
+
+<footer>© 2026 Michael Lohmar &nbsp;·&nbsp; Köln</footer>
+
+<script>
+  function openLightbox() {
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>
